@@ -1,0 +1,47 @@
+/* components/Feature.module.css */
+.feature {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: var(--white);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  background: var(--bg-light);
+  transform: translateX(5px);
+}
+
+.iconBox {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 1.8rem;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 1.25rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.description {
+  color: var(--text-light);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
