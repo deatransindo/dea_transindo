@@ -9,7 +9,7 @@ export default function WhatsAppChat() {
   // Ganti dengan nomor WhatsApp perusahaan Anda (format: 62xxx tanpa +)
   const phoneNumber = '62818828388';
   const defaultMessage =
-    'Halo FreightPro, saya ingin bertanya tentang layanan freight forwarding.';
+    'Halo Deatransindo, saya ingin bertanya tentang layanan freight forwarding.';
 
   const handleWhatsAppClick = () => {
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
