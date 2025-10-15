@@ -192,9 +192,9 @@ export default function CalculatorPage() {
                       <span>cm</span>
                     </div>
                   </div>
-                  <small>
+                  {/* <small>
                     Ukuran panjang × lebar × tinggi dalam sentimeter
-                  </small>
+                  </small> */}
                 </div>
 
                 <div className={styles.formGroup}>

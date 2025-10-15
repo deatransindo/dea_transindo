@@ -55,9 +55,8 @@ export default function Home() {
   const features = [
     {
       icon: '🌍',
-      title: 'Jangkauan Global',
-      description:
-        'Jaringan partner di lebih dari 50 negara untuk memastikan pengiriman ke seluruh dunia.',
+      title: 'Transparansi',
+      description: 'Hitung perkiraan biaya impor anda, dan konsultasi gratis',
     },
     {
       icon: '⚡',
@@ -175,10 +174,7 @@ export default function Home() {
               <span className={styles.trackingIcon}>📦</span>
               <div>
                 <h2>Lacak Kiriman Anda</h2>
-                <p>
-                  Masukkan nomor resi untuk melacak posisi barang Anda secara
-                  real-time
-                </p>
+                <p>Masukkan nomor resi untuk melacak posisi barang Anda.</p>
               </div>
             </div>
 
@@ -186,7 +182,7 @@ export default function Home() {
               <div className={styles.trackingInputGroup}>
                 <input
                   type="text"
-                  placeholder="Masukkan nomor resi (contoh: FP123456789)"
+                  placeholder="Masukkan nomor resi..."
                   value={trackingNumber}
                   onChange={(e) => setTrackingNumber(e.target.value)}
                   className={styles.trackingInput}
@@ -200,9 +196,9 @@ export default function Home() {
                   {isTracking ? '🔍 Melacak...' : '🔍 Lacak Sekarang'}
                 </button>
               </div>
-              <small className={styles.trackingHint}>
+              {/* <small className={styles.trackingHint}>
                 💡 Contoh nomor resi: FP123456789 atau FP987654321
-              </small>
+              </small> */}
             </form>
 
             {trackingError && (

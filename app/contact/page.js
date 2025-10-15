@@ -2,6 +2,7 @@
 'use client';
 import { useState } from 'react';
 import styles from './contact.module.css';
+import Image from 'next/image';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -145,28 +146,28 @@ export default function ContactPage() {
                     aria-label="Facebook"
                     target="blank"
                   >
-                    <img src="/icons/facebook.png" alt="Facebook" />
+                    <Image src="/icons/facebook.png" alt="Facebook" />
                   </a>
                   <a
                     href="https://www.instagram.com/deatransolusindo/"
                     aria-label="Instagram"
                     target="blank"
                   >
-                    <img src="/icons/instagram.png" alt="Instagram" />
+                    <Image src="/icons/instagram.png" alt="Instagram" />
                   </a>
                   <a
                     href="https://www.tiktok.com/@deatrans92"
                     aria-label="tiktok"
                     target="blank"
                   >
-                    <img src="/icons/tiktok.png" alt="tiktok" />
+                    <Image src="/icons/tiktok.png" alt="tiktok" />
                   </a>
                   <a
                     href="http://wa.me/62818828388"
                     aria-label="whatsapp"
                     target="blank"
                   >
-                    <img src="/icons/social.png" alt="whatsapp" />
+                    <Image src="/icons/social.png" alt="whatsapp" />
                   </a>
                 </div>
               </div>

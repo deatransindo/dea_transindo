@@ -47,16 +47,15 @@ export default function ServicesPage() {
         'Solusi manajemen rantai pasok end-to-end untuk optimalisasi logistik bisnis Anda. Termasuk perencanaan, koordinasi, dan monitoring seluruh proses.',
     },
     {
-      icon: '🏭',
-      title: 'Project Cargo',
+      icon: '🧮',
+      title: 'Calculator Impor',
       description:
-        'Penanganan khusus untuk kargo berukuran besar, berat, atau memerlukan handling khusus. Kami memiliki pengalaman dalam proyek konstruksi, oil & gas, dan industri.',
+        'Hitung perkiraan biaya impor anda secara langsung, untuk keterangan lebih lanjut anda bisa mengirimi kami pesan di halaman contact',
     },
     {
-      icon: '❄️',
-      title: 'Cold Chain Logistics',
-      description:
-        'Layanan khusus untuk produk yang memerlukan suhu terkontrol seperti makanan, farmasi, dan bahan kimia dengan reefer container dan cold storage.',
+      icon: '🛍️',
+      title: 'Jasa Titip',
+      description: 'Layanan khusus untuk pembelian produk dari China',
     },
     {
       icon: '📱',

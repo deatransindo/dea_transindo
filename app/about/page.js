@@ -1,6 +1,7 @@
 // app/about/page.js
 import Feature from '@/components/Feature';
 import styles from './about.module.css';
+import Image from 'next/image';
 
 // export const metadata = {
 //   title: 'Tentang Kami - deatranssolusindo',
@@ -106,7 +107,7 @@ export default function AboutPage() {
             </div>
             <div className={styles.overviewImage}>
               <div className={styles.imagePlaceholder}>
-                <img
+                <Image
                   src="/images/office.jpg"
                   alt="Kantor Pusat"
                   className={styles.image}
@@ -134,51 +135,6 @@ export default function AboutPage() {
                 description={value.description}
               />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="section">
-        <div className="container">
-          <h2 className="section-title">Perjalanan Kami</h2>
-          <p className="section-subtitle">
-            Tonggak penting dalam sejarah perkembangan Dea Trans Solusindo
-          </p>
-          <div className={styles.timeline}>
-            {milestones.map((milestone, index) => (
-              <div key={index} className={styles.timelineItem}>
-                <div className={styles.timelineYear}>{milestone.year}</div>
-                <div className={styles.timelineContent}>
-                  <h3>{milestone.title}</h3>
-                  <p>{milestone.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className={styles.statsSection}>
-        <div className="container">
-          <div className={styles.statsGrid}>
-            <div className={styles.statCard}>
-              <div className={styles.statNumber}>3+</div>
-              <div className={styles.statLabel}>Tahun Pengalaman</div>
-            </div>
-            <div className={styles.statCard}>
-              <div className={styles.statNumber}>Guangzhou</div>
-              <div className={styles.statLabel}>to Jakarta</div>
-            </div>
-            <div className={styles.statCard}>
-              <div className={styles.statNumber}>10,000+</div>
-              <div className={styles.statLabel}>Pengiriman Sukses</div>
-            </div>
-            <div className={styles.statCard}>
-              <div className={styles.statNumber}>500+</div>
-              <div className={styles.statLabel}>Klien Puas</div>
-            </div>
           </div>
         </div>
       </section>
