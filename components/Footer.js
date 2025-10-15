@@ -31,28 +31,48 @@ export default function Footer() {
                 aria-label="Facebook"
                 target="blank"
               >
-                <Image src="/icons/facebook.png" alt="Facebook" />
+                <Image
+                  src="/icons/facebook.png"
+                  alt="Facebook"
+                  width={50}
+                  height={50}
+                />
               </a>
               <a
                 href="https://www.instagram.com/deatransolusindo/"
                 aria-label="Instagram"
                 target="blank"
               >
-                <Image src="/icons/instagram.png" alt="Instagram" />
+                <Image
+                  src="/icons/instagram.png"
+                  alt="Instagram"
+                  width={50}
+                  height={50}
+                />
               </a>
               <a
                 href="https://www.tiktok.com/@deatrans92"
                 aria-label="tiktok"
                 target="blank"
               >
-                <Image src="/icons/tiktok.png" alt="tiktok" />
+                <Image
+                  src="/icons/tiktok.png"
+                  alt="tiktok"
+                  width={50}
+                  height={50}
+                />
               </a>
               <a
                 href="http://wa.me/62818828388"
                 aria-label="whatsapp"
                 target="blank"
               >
-                <Image src="/icons/social.png" alt="whatsapp" />
+                <Image
+                  src="/icons/social.png"
+                  alt="whatsapp"
+                  width={50}
+                  height={50}
+                />
               </a>
             </div>
           </div>

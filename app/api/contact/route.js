@@ -1,13 +1,13 @@
 // app/api/contact/route.js
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import clientPromise from '@/lib/mongodb';
 
 export async function POST(request) {
   try {
     const body = await request.json();
     const { name, email, phone, company, service, message } = body;
 
-    // Validasi data
+    // Validasi
     if (!name || !email || !phone || !message) {
       return NextResponse.json(
         { message: 'Mohon lengkapi semua field yang wajib diisi' },
@@ -15,7 +15,7 @@ export async function POST(request) {
       );
     }
 
-    // Validasi format email
+    // Validasi email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -24,55 +24,37 @@ export async function POST(request) {
       );
     }
 
-    // Get IP address dan User Agent
+    // Get IP & User Agent
     const forwarded = request.headers.get('x-forwarded-for');
     const ip = forwarded
       ? forwarded.split(',')[0]
       : request.headers.get('x-real-ip') || 'unknown';
     const userAgent = request.headers.get('user-agent') || 'unknown';
 
-    // Save to database
-    try {
-      const [result] = await pool.query(
-        `INSERT INTO contact_submissions 
-        (name, email, phone, company, service, message, ip_address, user_agent, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'new')`,
-        [
-          name,
-          email,
-          phone,
-          company || null,
-          service || null,
-          message,
-          ip,
-          userAgent,
-        ]
-      );
+    // Connect to MongoDB
+    const client = await clientPromise;
+    const db = client.db('deatrans_db');
 
-      console.log('✅ Contact form saved to database');
-      console.log('   ID:', result.insertId);
-      console.log('   Name:', name);
-      console.log('   Email:', email);
-    } catch (dbError) {
-      console.error('❌ Database error:', dbError);
-      // Jika database error, tetap return success tapi log error
-      // Sehingga user tidak tahu ada masalah di backend
-    }
+    // Insert document
+    const result = await db.collection('contact_submissions').insertOne({
+      name,
+      email,
+      phone,
+      company: company || null,
+      service: service || null,
+      message,
+      status: 'new',
+      ip_address: ip,
+      user_agent: userAgent,
+      submitted_at: new Date(),
+      read_at: null,
+      replied_at: null,
+    });
 
-    // Log data untuk backup (jika database gagal)
-    console.log('📋 Contact Form Submission:');
-    console.log('========================');
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Phone:', phone);
-    console.log('Company:', company || 'N/A');
-    console.log('Service:', service || 'N/A');
-    console.log('Message:', message);
-    console.log('IP:', ip);
-    console.log('Timestamp:', new Date().toISOString());
-    console.log('========================');
+    console.log('✅ Contact form saved to MongoDB');
+    console.log('   ID:', result.insertedId);
+    console.log('   Name:', name);
 
-    // Return success response
     return NextResponse.json(
       {
         message: 'Pesan berhasil dikirim',
@@ -81,7 +63,7 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error processing contact form:', error);
+    console.error('Error:', error);
     return NextResponse.json(
       { message: 'Terjadi kesalahan server. Silakan coba lagi nanti.' },
       { status: 500 }
@@ -89,27 +71,24 @@ export async function POST(request) {
   }
 }
 
-// Handle GET request (optional - untuk view submissions)
+// GET endpoint to view submissions
 export async function GET(request) {
   try {
-    // Optional: Add authentication check here
-
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const limit = parseInt(searchParams.get('limit')) || 50;
 
-    let query = 'SELECT * FROM contact_submissions';
-    let params = [];
+    const client = await clientPromise;
+    const db = client.db('deatrans_db');
 
-    if (status) {
-      query += ' WHERE status = ?';
-      params.push(status);
-    }
+    const query = status ? { status } : {};
 
-    query += ' ORDER BY submitted_at DESC LIMIT ?';
-    params.push(limit);
-
-    const [submissions] = await pool.query(query, params);
+    const submissions = await db
+      .collection('contact_submissions')
+      .find(query)
+      .sort({ submitted_at: -1 })
+      .limit(limit)
+      .toArray();
 
     return NextResponse.json(
       {
@@ -120,7 +99,7 @@ export async function GET(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error fetching submissions:', error);
+    console.error('Error:', error);
     return NextResponse.json(
       { message: 'Error fetching data' },
       { status: 500 }

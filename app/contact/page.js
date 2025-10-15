@@ -137,40 +137,6 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-
-              <div className={styles.socialLinks}>
-                <h4>Ikuti Kami</h4>
-                <div className={styles.socialIcons}>
-                  <a
-                    href="https://www.facebook.com/profile.php?id=61564861785387"
-                    aria-label="Facebook"
-                    target="blank"
-                  >
-                    <Image src="/icons/facebook.png" alt="Facebook" />
-                  </a>
-                  <a
-                    href="https://www.instagram.com/deatransolusindo/"
-                    aria-label="Instagram"
-                    target="blank"
-                  >
-                    <Image src="/icons/instagram.png" alt="Instagram" />
-                  </a>
-                  <a
-                    href="https://www.tiktok.com/@deatrans92"
-                    aria-label="tiktok"
-                    target="blank"
-                  >
-                    <Image src="/icons/tiktok.png" alt="tiktok" />
-                  </a>
-                  <a
-                    href="http://wa.me/62818828388"
-                    aria-label="whatsapp"
-                    target="blank"
-                  >
-                    <Image src="/icons/social.png" alt="whatsapp" />
-                  </a>
-                </div>
-              </div>
             </div>
 
             {/* Contact Form */}

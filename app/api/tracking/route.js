@@ -1,6 +1,6 @@
 // app/api/tracking/route.js
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import clientPromise from '@/lib/mongodb';
 
 export async function GET(request) {
   try {
@@ -17,13 +17,16 @@ export async function GET(request) {
       );
     }
 
-    // Query shipment dari database
-    const [shipments] = await pool.query(
-      'SELECT * FROM shipments WHERE tracking_number = ?',
-      [trackingNumber.toUpperCase()]
-    );
+    // Connect to MongoDB
+    const client = await clientPromise;
+    const db = client.db('deatrans_db');
 
-    if (shipments.length === 0) {
+    // Find shipment
+    const shipment = await db.collection('shipments').findOne({
+      tracking_number: trackingNumber.toUpperCase(),
+    });
+
+    if (!shipment) {
       return NextResponse.json(
         {
           success: false,
@@ -34,22 +37,12 @@ export async function GET(request) {
       );
     }
 
-    const shipment = shipments[0];
-
-    // Query tracking history
-    const [history] = await pool.query(
-      `SELECT 
-        status_code, 
-        status_name, 
-        location, 
-        description, 
-        remarks, 
-        DATE_FORMAT(timestamp, '%Y-%m-%d %H:%i') as timestamp
-       FROM tracking_history 
-       WHERE shipment_id = ? 
-       ORDER BY timestamp ASC`,
-      [shipment.id]
-    );
+    // Get tracking history (optional - jika ada)
+    const history = await db
+      .collection('tracking_history')
+      .find({ shipment_id: shipment._id })
+      .sort({ timestamp: 1 })
+      .toArray();
 
     // Format dates
     const formatDate = (date) => {
@@ -59,6 +52,8 @@ export async function GET(request) {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
       });
     };
 
@@ -114,56 +109,21 @@ export async function GET(request) {
           location: h.location,
           description: h.description,
           remarks: h.remarks,
-          timestamp: h.timestamp,
+          timestamp: formatDate(h.timestamp),
         })),
       },
     };
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
-    console.error('Database Error:', error);
-
-    // Check if it's a database connection error
-    if (error.code === 'ECONNREFUSED') {
-      return NextResponse.json(
-        {
-          success: false,
-          error:
-            'Database connection failed. Please make sure MySQL is running.',
-          details: 'MySQL service is not running or not accessible',
-        },
-        { status: 500 }
-      );
-    }
-
-    if (error.code === 'ER_BAD_DB_ERROR') {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Database not found',
-          details:
-            'Database "freightpro_db" does not exist. Please create it first.',
-        },
-        { status: 500 }
-      );
-    }
-
-    if (error.code === 'ER_NO_SUCH_TABLE') {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Database tables not found',
-          details: 'Please import database-schema.sql file',
-        },
-        { status: 500 }
-      );
-    }
+    console.error('MongoDB Error:', error);
 
     return NextResponse.json(
       {
         success: false,
         error: 'Internal server error',
-        details: error.message,
+        details:
+          process.env.NODE_ENV === 'development' ? error.message : undefined,
       },
       { status: 500 }
     );

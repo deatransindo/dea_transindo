@@ -110,6 +110,8 @@ export default function AboutPage() {
                 <Image
                   src="/images/office.jpg"
                   alt="Kantor Pusat"
+                  width={500}
+                  height={500}
                   className={styles.image}
                 />
                 <p>Kantor Pusat Dea Trans Solusindo</p>
