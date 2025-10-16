@@ -102,8 +102,9 @@ export default function Home() {
           destination: `${shipment.destination.city}, ${shipment.destination.country}`,
           destinationPort: shipment.destination.port,
           destinationAddress: shipment.destination.address,
-          currentLocation:
-            history.length > 0 ? history[history.length - 1].location : '-',
+          currentLocation: shipment.destination.city,
+          // currentLocation:
+          //   shipment.length > 0 ? history[history.length - 1].location : '-',
           weight: shipment.details.weight,
           cargoDescription: shipment.details.cargoDescription,
           containerNumber: shipment.details.containerNumber,
@@ -196,9 +197,6 @@ export default function Home() {
                   {isTracking ? '🔍 Melacak...' : '🔍 Lacak Sekarang'}
                 </button>
               </div>
-              {/* <small className={styles.trackingHint}>
-                💡 Contoh nomor resi: FP123456789 atau FP987654321
-              </small> */}
             </form>
 
             {trackingError && (

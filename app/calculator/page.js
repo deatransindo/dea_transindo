@@ -37,50 +37,40 @@ export default function CalculatorPage() {
       const quantity = parseInt(formData.quantity);
 
       // Hitung volume weight (dalam kg)
-      const volumeWeight = (length * width * height * quantity) / 6000; // DIM factor for air
+      const volumeWeight = (length * width * height * quantity) / 6000;
 
       // Gunakan berat yang lebih besar (actual weight vs volume weight)
-      const chargeableWeight = Math.max(weight * quantity, volumeWeight);
+      const chargeableWeight = Math.max(weight * quantity);
+
+      // Hitung CBM (Cubic Meter)
+      const cbm = (length * width * height * quantity) / 1000000;
 
       // Hitung biaya berdasarkan metode pengiriman
-      let baseRate, transitDays, customsClearance, adminFee, insurance;
+      let totalCost, transitDays, shippingMethod, chargeUnit;
 
       if (formData.shippingMethod === 'sea') {
-        baseRate = chargeableWeight * 15000; // Rp 15,000 per kg untuk sea freight
-        transitDays = '25-35 hari';
-        customsClearance = 2500000; // Rp 2,500,000
-        adminFee = 500000; // Rp 500,000
-        insurance = baseRate * 0.015; // 1.5% dari nilai barang
+        // Sea Freight: Rp 3,500,000 per CBM all-in
+        totalCost = cbm * 3500000;
+        transitDays = '21-30 hari';
+        shippingMethod = 'Sea Freight';
+        chargeUnit = cbm.toFixed(4);
       } else {
-        baseRate = chargeableWeight * 45000; // Rp 45,000 per kg untuk air freight
-        transitDays = '5-7 hari';
-        customsClearance = 3000000; // Rp 3,000,000
-        adminFee = 750000; // Rp 750,000
-        insurance = baseRate * 0.02; // 2% dari nilai barang
+        // Air Freight: Rp 195,000 per kg all-in
+        totalCost = chargeableWeight * 195000;
+        transitDays = '3-5 hari';
+        shippingMethod = 'Air Freight';
+        chargeUnit = chargeableWeight.toFixed(2);
       }
 
-      // Hitung pajak impor (estimasi 10% dari nilai barang)
-      const importDuty = baseRate * 0.1;
-      const vat = (baseRate + importDuty) * 0.11; // PPN 11%
-
-      // Total biaya
-      const totalCost =
-        baseRate + customsClearance + adminFee + insurance + importDuty + vat;
-
       setResult({
-        chargeableWeight: chargeableWeight.toFixed(2),
-        volumeWeight: volumeWeight.toFixed(2),
-        actualWeight: (weight * quantity).toFixed(2),
-        baseRate,
-        customsClearance,
-        adminFee,
-        insurance,
-        importDuty,
-        vat,
+        chargeableWeight: chargeableWeight,
+        volumeWeight: volumeWeight,
+        actualWeight: weight * quantity,
+        cbm: cbm.toFixed(2),
+        chargeUnit: chargeUnit,
         totalCost,
         transitDays,
-        shippingMethod:
-          formData.shippingMethod === 'sea' ? 'Sea Freight' : 'Air Freight',
+        shippingMethod,
       });
 
       setIsCalculating(false);
@@ -142,7 +132,7 @@ export default function CalculatorPage() {
                     step="0.1"
                     min="0.1"
                     required
-                    placeholder="Contoh: 5.5"
+                    placeholder="Masukan berat.."
                   />
                   <small>Masukkan berat aktual barang dalam kilogram</small>
                 </div>
@@ -192,9 +182,6 @@ export default function CalculatorPage() {
                       <span>cm</span>
                     </div>
                   </div>
-                  {/* <small>
-                    Ukuran panjang × lebar × tinggi dalam sentimeter
-                  </small> */}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -207,7 +194,7 @@ export default function CalculatorPage() {
                     onChange={handleChange}
                     min="1"
                     required
-                    placeholder="Contoh: 10"
+                    placeholder="Masukan quantity.."
                   />
                   <small>Berapa banyak item yang akan dikirim</small>
                 </div>
@@ -221,12 +208,8 @@ export default function CalculatorPage() {
                     onChange={handleChange}
                     required
                   >
-                    <option value="sea">
-                      🚢 Sea Freight (Laut) - Lebih Ekonomis
-                    </option>
-                    <option value="air">
-                      ✈️ Air Freight (Udara) - Lebih Cepat
-                    </option>
+                    <option value="sea">🚢 Sea Freight (Laut)</option>
+                    <option value="air">✈️ Air Freight (Udara)</option>
                   </select>
                 </div>
 
@@ -256,7 +239,7 @@ export default function CalculatorPage() {
                   <span className={styles.emptyIcon}>📊</span>
                   <h3>Hasil Perhitungan</h3>
                   <p>
-                    Isi formulir dan klik tombol Hitung Biaya untuk melihat
+                    Isi formulir dan klik tombol "Hitung Biaya" untuk melihat
                     estimasi biaya impor Anda
                   </p>
                 </div>
@@ -290,38 +273,50 @@ export default function CalculatorPage() {
                         <strong>{result.chargeableWeight} kg</strong>
                       </span>
                     </div>
+                    {result.shippingMethod === 'Sea Freight' && (
+                      <div className={styles.weightItem}>
+                        <span className={styles.weightLabel}>
+                          Volume (CBM):
+                        </span>
+                        <span className={styles.weightValue}>
+                          <strong>{result.cbm} m³</strong>
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className={styles.costBreakdown}>
                     <h4>Rincian Biaya:</h4>
                     <div className={styles.costItem}>
-                      <span>Biaya Freight</span>
-                      <span>{formatCurrency(result.baseRate)}</span>
+                      <span>Total perkiraan biaya kirim</span>
+                      {/* <span>
+                        {result.shippingMethod === 'Sea Freight'
+                          ? `Biaya Freight (${result.chargeUnit} CBM × Rp 3.500.000)`
+                          : `Biaya Freight (${result.chargeUnit} kg × Rp 195.000)`}
+                      </span> */}
+                      <span>{formatCurrency(result.totalCost)}</span>
                     </div>
-                    <div className={styles.costItem}>
-                      <span>Customs Clearance</span>
-                      <span>{formatCurrency(result.customsClearance)}</span>
-                    </div>
-                    <div className={styles.costItem}>
-                      <span>Biaya Admin & Handling</span>
-                      <span>{formatCurrency(result.adminFee)}</span>
-                    </div>
-                    <div className={styles.costItem}>
-                      <span>Asuransi</span>
-                      <span>{formatCurrency(result.insurance)}</span>
-                    </div>
-                    <div className={styles.costItem}>
-                      <span>Bea Masuk (Est. 10%)</span>
-                      <span>{formatCurrency(result.importDuty)}</span>
-                    </div>
-                    <div className={styles.costItem}>
-                      <span>PPN 11%</span>
-                      <span>{formatCurrency(result.vat)}</span>
+                    <div
+                      style={{
+                        fontSize: '0.85rem',
+                        color: '#666',
+                        marginTop: '12px',
+                        padding: '10px',
+                        backgroundColor: '#f5f5f5',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      <p style={{ margin: '4px 0', fontWeight: '500' }}>
+                        ✅ Sudah termasuk:
+                      </p>
+                      <p style={{ margin: '4px 0' }}>🟢 Custom Clearance</p>
+                      <p style={{ margin: '4px 0' }}>🟢 Bea Masuk</p>
+                      <p style={{ margin: '4px 0' }}>🟢 Pajak (PPN)</p>
                     </div>
                   </div>
 
                   <div className={styles.totalCost}>
-                    <span>Total Estimasi Biaya:</span>
+                    <span>Total Biaya (All-In):</span>
                     <span className={styles.totalAmount}>
                       {formatCurrency(result.totalCost)}
                     </span>
@@ -340,6 +335,10 @@ export default function CalculatorPage() {
                       <strong>⚠️ Catatan Penting:</strong>
                     </p>
                     <ul>
+                      <li>
+                        Harga adalah all-in (sudah termasuk custom clearance,
+                        bea masuk, dan pajak)
+                      </li>
                       <li>
                         Estimasi ini hanya perhitungan kasar dan dapat berubah
                       </li>
@@ -383,11 +382,15 @@ export default function CalculatorPage() {
             </div>
             <div className={styles.infoCard}>
               <span className={styles.infoIcon}>⚖️</span>
-              <h3>Perhitungan Berat</h3>
+              <h3>Perhitungan Biaya</h3>
               <ul>
-                <li>Berat Volume: (P × L × T) / 6000</li>
-                <li>Berat dikenakan adalah yang lebih besar</li>
-                <li>Untuk sea freight, faktor berbeda</li>
+                <li>
+                  <strong>Sea Freight:</strong> Rp 3.500.000 per CBM (All-In)
+                </li>
+                <li>
+                  <strong>Air Freight:</strong> Rp 195.000 per kg (All-In)
+                </li>
+                <li>CBM = (P × L × T × Qty) / 1.000.000</li>
               </ul>
             </div>
             <div className={styles.infoCard}>

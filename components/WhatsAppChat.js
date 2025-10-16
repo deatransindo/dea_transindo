@@ -8,7 +8,7 @@ export default function WhatsAppChat() {
   const [message, setMessage] = useState('');
 
   // Ganti dengan nomor WhatsApp perusahaan Anda (format: 62xxx tanpa +)
-  const phoneNumber = '6282112345678';
+  const phoneNumber = '62818828388';
 
   // Quick reply messages
   const quickReplies = [

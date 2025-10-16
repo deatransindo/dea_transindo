@@ -52,8 +52,6 @@ export async function GET(request) {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
       });
     };
 
@@ -76,7 +74,7 @@ export async function GET(request) {
           },
 
           destination: {
-            city: shipment.destination_city,
+            city: shipment.current_location,
             port: shipment.destination_port,
             address: shipment.destination_address,
             country: shipment.destination_country || 'Indonesia',
