@@ -381,16 +381,13 @@ export default function CalculatorPage() {
               </ul>
             </div>
             <div className={styles.infoCard}>
-              <span className={styles.infoIcon}>⚖️</span>
-              <h3>Perhitungan Biaya</h3>
+              <span className={styles.infoIcon}>💰</span>
+              <h3>Total Biaya Sudah Termasuk</h3>
               <ul>
-                <li>
-                  <strong>Sea Freight:</strong> Rp 3.500.000 per CBM (All-In)
-                </li>
-                <li>
-                  <strong>Air Freight:</strong> Rp 195.000 per kg (All-In)
-                </li>
-                <li>CBM = (P × L × T × Qty) / 1.000.000</li>
+                <li>Custom Clearance</li>
+                <li>Bea Masuk</li>
+                <li>Pajak (PPN)</li>
+                <li>Asuransi</li>
               </ul>
             </div>
             <div className={styles.infoCard}>
