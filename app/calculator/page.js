@@ -239,8 +239,8 @@ export default function CalculatorPage() {
                   <span className={styles.emptyIcon}>📊</span>
                   <h3>Hasil Perhitungan</h3>
                   <p>
-                    Isi formulir dan klik tombol "Hitung Biaya" untuk melihat
-                    estimasi biaya impor Anda
+                    Isi formulir dan klik tombol &quot;Hitung Biaya&quot; untuk
+                    melihat estimasi biaya impor Anda
                   </p>
                 </div>
               ) : (
