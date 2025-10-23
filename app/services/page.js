@@ -1,5 +1,4 @@
 // app/services/page.js
-import ServiceCard from '@/components/ServiceCard';
 import Link from 'next/link';
 import styles from './services.module.css';
 
@@ -11,80 +10,46 @@ import styles from './services.module.css';
 export default function ServicesPage() {
   const mainServices = [
     {
-      icon: '🚢',
-      title: 'Sea Freight (LCL & FCL)',
+      image: '/images/sea-freight.jpg',
+      title: 'Sea Freight',
       description:
-        'Layanan pengiriman laut untuk Less than Container Load (LCL) dan Full Container Load (FCL). Solusi ekonomis untuk kargo bervolume besar dengan rute ke seluruh pelabuhan utama dunia.',
+        'Cost-effective maritime shipping solutions for Less than Container Load (LCL) and Full Container Load (FCL) services. We offer routes to all major world ports with competitive rates and reliable schedules.',
+      imagePosition: 'right',
     },
     {
-      icon: '✈️',
+      image: '/images/air-freight.jpg',
       title: 'Air Freight',
       description:
-        'Pengiriman udara cepat dan aman untuk barang-barang yang membutuhkan waktu transit singkat. Tersedia layanan door-to-door dan airport-to-airport dengan berbagai pilihan carrier.',
+        'Fast and secure air cargo services for shipments requiring quick transit times. We provide comprehensive door-to-door and airport-to-airport services with multiple carrier options to meet your needs.',
+      imagePosition: 'left',
     },
     {
-      icon: '🚚',
+      image: '/images/land-freight.jpg',
       title: 'Land Freight',
       description:
-        'Pengiriman darat menggunakan truk dan kontainer untuk distribusi domestik dan regional. Cocok untuk pengiriman antar kota atau antar pulau dengan jalur darat.',
+        'Efficient ground transportation using trucks and containers for domestic and regional distribution. Our network covers major cities with real-time tracking and dedicated customer support throughout your shipment.',
+      imagePosition: 'right',
     },
     {
-      icon: '📦',
+      image: '/images/warehouse.jpg',
       title: 'Warehousing & Distribution',
       description:
-        'Fasilitas gudang modern dengan sistem WMS (Warehouse Management System) untuk penyimpanan, packing, dan distribusi barang Anda dengan aman dan efisien.',
+        'Modern warehouse facilities equipped with advanced Warehouse Management Systems (WMS) for secure storage, professional packing, and efficient distribution of your goods.',
+      imagePosition: 'left',
     },
     {
-      icon: '📋',
+      image: '/images/customs.jpg',
       title: 'Customs Clearance',
       description:
-        'Pengurusan dokumen kepabeanan dan customs clearance yang cepat dan profesional. Tim berpengalaman memastikan proses impor-ekspor berjalan lancar.',
+        'Professional customs brokerage and documentation services with expert handling of import-export procedures. Our experienced team ensures smooth clearance and compliance with all regulations.',
+      imagePosition: 'right',
     },
     {
-      icon: '📊',
+      image: '/images/supply-chain.jpg',
       title: 'Supply Chain Management',
       description:
-        'Solusi manajemen rantai pasok end-to-end untuk optimalisasi logistik bisnis Anda. Termasuk perencanaan, koordinasi, dan monitoring seluruh proses.',
-    },
-    {
-      icon: '🧮',
-      title: 'Calculator Impor',
-      description:
-        'Hitung perkiraan biaya impor anda secara langsung, untuk keterangan lebih lanjut anda bisa mengirimi kami pesan di halaman contact',
-    },
-    {
-      icon: '🛍️',
-      title: 'Jasa Titip',
-      description: 'Layanan khusus untuk pembelian produk dari China',
-    },
-    {
-      icon: '📱',
-      title: 'Track & Trace',
-      description:
-        'Sistem tracking real-time untuk memantau posisi dan status pengiriman Anda kapan saja, di mana saja melalui platform online atau mobile app.',
-    },
-  ];
-
-  const additionalServices = [
-    {
-      icon: '💼',
-      title: 'Cargo Insurance',
-      description: 'Asuransi kargo untuk perlindungan maksimal',
-    },
-    {
-      icon: '📄',
-      title: 'Documentation',
-      description: 'Pengurusan dokumen lengkap impor-ekspor',
-    },
-    {
-      icon: '🔍',
-      title: 'Quality Inspection',
-      description: 'Inspeksi kualitas barang sebelum pengiriman',
-    },
-    {
-      icon: '📦',
-      title: 'Packing & Crating',
-      description: 'Layanan packing profesional untuk keamanan barang',
+        'End-to-end supply chain solutions for complete logistics optimization. We handle planning, coordination, and real-time monitoring of your entire supply chain operations.',
+      imagePosition: 'left',
     },
   ];
 
@@ -93,9 +58,10 @@ export default function ServicesPage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.heroTitle}>Layanan Kami</h1>
+          <h1 className={styles.heroTitle}>Our Services</h1>
           <p className={styles.heroSubtitle}>
-            Solusi logistik lengkap untuk semua kebutuhan pengiriman Anda
+            Comprehensive freight forwarding and logistics solutions tailored to
+            your business needs
           </p>
         </div>
       </section>
@@ -103,37 +69,24 @@ export default function ServicesPage() {
       {/* Main Services */}
       <section className="section">
         <div className="container">
-          <h2 className="section-title">Layanan Utama</h2>
-          <p className="section-subtitle">
-            Berbagai pilihan layanan freight forwarding yang dapat disesuaikan
-            dengan kebutuhan bisnis Anda
-          </p>
-          <div className={styles.servicesGrid}>
+          <div className={styles.mainServicesContainer}>
             {mainServices.map((service, index) => (
-              <ServiceCard
+              <div
                 key={index}
-                icon={service.icon}
-                title={service.title}
-                description={service.description}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Additional Services */}
-      <section className={styles.additionalSection}>
-        <div className="container">
-          <h2 className="section-title">Layanan Tambahan</h2>
-          <p className="section-subtitle">
-            Layanan pendukung untuk melengkapi kebutuhan logistik Anda
-          </p>
-          <div className={styles.additionalGrid}>
-            {additionalServices.map((service, index) => (
-              <div key={index} className={styles.additionalCard}>
-                <span className={styles.additionalIcon}>{service.icon}</span>
-                <h4>{service.title}</h4>
-                <p>{service.description}</p>
+                className={`${styles.serviceRow} ${
+                  styles[`position-${service.imagePosition}`]
+                }`}
+              >
+                <div className={styles.serviceContent}>
+                  <h3 className={styles.serviceTitle}>{service.title}</h3>
+                  <p className={styles.serviceDescription}>
+                    {service.description}
+                  </p>
+                </div>
+                <div className={styles.serviceImage}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={service.image} alt={service.title} />
+                </div>
               </div>
             ))}
           </div>
@@ -143,30 +96,30 @@ export default function ServicesPage() {
       {/* Process Section */}
       <section className="section">
         <div className="container">
-          <h2 className="section-title">Proses Kerja Kami</h2>
+          <h2 className="section-title">Our Working Process</h2>
           <p className="section-subtitle">
-            Langkah mudah untuk menggunakan layanan kami
+            Simple steps to use our services
           </p>
           <div className={styles.processGrid}>
             <div className={styles.processCard}>
               <div className={styles.processNumber}>1</div>
-              <h3>Konsultasi</h3>
-              <p>Hubungi kami untuk mendiskusikan kebutuhan pengiriman Anda</p>
+              <h3>Consultation</h3>
+              <p>Contact us to discuss your shipping needs and requirements</p>
             </div>
             <div className={styles.processCard}>
               <div className={styles.processNumber}>2</div>
               <h3>Quotation</h3>
-              <p>Dapatkan penawaran harga yang kompetitif dan transparan</p>
+              <p>Get competitive and transparent pricing quotes for your shipment</p>
             </div>
             <div className={styles.processCard}>
               <div className={styles.processNumber}>3</div>
               <h3>Booking</h3>
-              <p>Konfirmasi booking dan persiapan dokumen pengiriman</p>
+              <p>Confirm booking and prepare all necessary shipping documents</p>
             </div>
             <div className={styles.processCard}>
               <div className={styles.processNumber}>4</div>
-              <h3>Pengiriman</h3>
-              <p>Kami handle seluruh proses pengiriman hingga tiba di tujuan</p>
+              <h3>Delivery</h3>
+              <p>We handle the entire shipping process until arrival at destination</p>
             </div>
           </div>
         </div>
@@ -176,13 +129,13 @@ export default function ServicesPage() {
       <section className={styles.ctaSection}>
         <div className="container">
           <div className={styles.ctaContent}>
-            <h2>Butuh Solusi Logistik?</h2>
+            <h2>Need Logistics Solutions?</h2>
             <p>
-              Konsultasikan kebutuhan pengiriman Anda dengan tim expert kami dan
-              dapatkan solusi terbaik.
+              Consult with our expert team about your shipping needs and
+              discover the best solutions for your business.
             </p>
             <Link href="/contact" className="btn btn-secondary">
-              Hubungi Kami
+              Contact Us
             </Link>
           </div>
         </div>

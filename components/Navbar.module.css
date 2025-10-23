@@ -1,120 +1,282 @@
 /* components/Navbar.module.css */
 .navbar {
-  background-color: var(--white);
-  box-shadow: var(--shadow);
-  position: sticky;
-  top: 0;
+  background: rgba(10, 46, 61, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50px;
+  width: 95%;
+  max-width: 1300px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar.scrolled {
+  background: rgba(10, 46, 61, 0.7);
+  backdrop-filter: blur(20px);
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+  top: 10px;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 2rem;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .logoIcon {
-  font-size: 2rem;
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+  transition: all var(--transition-base);
 }
 
-.logoText {
-  color: var(--secondary-color);
+.scrolled .logoIcon {
+  width: 100px;
 }
 
 .navLinks {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 2.5rem;
   align-items: center;
+  flex: 1;
+  justify-content: center;
+  margin: 0;
 }
 
 .navLinks li a {
-  color: var(--text-dark);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
-  transition: color 0.3s ease;
+  font-size: 0.95rem;
+  transition: all var(--transition-base);
   position: relative;
+  padding: 8px 4px;
 }
 
 .navLinks li a:hover {
-  color: var(--primary-color);
+  color: #ffffff;
 }
 
 .navLinks li a::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: 0;
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--primary-color);
-  transition: width 0.3s ease;
+  background: var(--primary-color);
+  transition: width var(--transition-base);
 }
 
 .navLinks li a:hover::after {
   width: 100%;
 }
 
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.socialIcons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-right: 1rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.socialIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all var(--transition-base);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.socialIcon:hover {
+  color: #ffffff;
+  background: var(--primary-color);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
+  border-color: transparent;
+}
+
+.socialIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btnContact {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 10px 24px;
+  background: var(--bg-gradient-1);
+  border-radius: 25px;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+}
+
+.btnContact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 188, 212, 0.5);
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
   background: transparent;
-  padding: 5px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+}
+
+.hamburger:hover {
+  background: rgba(0, 188, 212, 0.1);
 }
 
 .hamburger span {
-  width: 25px;
+  width: 28px;
   height: 3px;
-  background-color: var(--secondary-color);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all var(--transition-base);
+  border-radius: 2px;
+}
+
+@media (max-width: 968px) {
+  .navbar {
+    width: 98%;
+    padding: 0.6rem 0;
+  }
+
+  .container {
+    padding: 0 20px;
+    gap: 1rem;
+  }
+
+  .navLinks {
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .socialIcons {
+    gap: 0.5rem;
+  }
+
+  .socialIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .btnContact {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    top: 10px;
+    padding: 0.5rem 0;
+  }
+
+  .navbar.scrolled {
+    top: 5px;
+  }
+
   .hamburger {
     display: flex;
+    z-index: 10;
   }
 
   .navLinks {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 15px);
     left: 0;
     width: 100%;
-    background-color: var(--white);
+    background: rgba(10, 46, 61, 0.98);
+    backdrop-filter: blur(20px);
     flex-direction: column;
     gap: 0;
     padding: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
-    box-shadow: var(--shadow);
+    transition: max-height var(--transition-slow);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    justify-content: flex-start;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .navLinks.active {
-    max-height: 300px;
+    max-height: 500px;
+    padding: 1.5rem 0;
   }
 
   .navLinks li {
     width: 100%;
     text-align: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .navLinks li a {
     display: block;
-    padding: 1rem;
+    padding: 1.2rem 2rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .navLinks li a::after {
+    display: none;
+  }
+
+  .socialIcons {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .socialIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .socialIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btnContact {
+    padding: 8px 18px;
+    font-size: 0.8rem;
   }
 
   .hamburger span.open:nth-child(1) {

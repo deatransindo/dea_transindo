@@ -1,5 +1,6 @@
 // app/about/page.js
 import Feature from '@/components/Feature';
+import Link from 'next/link';
 import styles from './about.module.css';
 import Image from 'next/image';
 
@@ -9,61 +10,84 @@ import Image from 'next/image';
 // }
 
 export default function AboutPage() {
+  const whyChooseUs = [
+    {
+      title: 'Transparent Pricing',
+      description:
+        'Clear and honest pricing with no hidden charges. We provide detailed cost breakdowns for all services.',
+    },
+    {
+      title: 'Fast Delivery',
+      description:
+        'Quick turnaround times and efficient processes ensure your cargo reaches on time, every time.',
+    },
+    {
+      title: 'Competitive Rates',
+      description:
+        'Best market prices without compromising quality. Flexible pricing options tailored to your needs.',
+    },
+    {
+      title: 'Secure & Reliable',
+      description:
+        'Full cargo insurance and 24/7 real-time tracking for complete peace of mind on every shipment.',
+    },
+  ];
+
   const values = [
     {
       icon: '🎯',
-      title: 'Profesionalisme',
+      title: 'Professionalism',
       description:
-        'Kami berkomitmen untuk memberikan layanan dengan standar profesional tertinggi dalam setiap aspek operasional.',
+        'We are committed to delivering services with the highest professional standards in every aspect of our operations.',
     },
     {
       icon: '🤝',
-      title: 'Integritas',
+      title: 'Integrity',
       description:
-        'Kejujuran dan transparansi adalah fondasi hubungan kami dengan klien dan mitra bisnis.',
+        'Honesty and transparency form the foundation of our relationships with clients and business partners.',
     },
     {
       icon: '💡',
-      title: 'Inovasi',
+      title: 'Innovation',
       description:
-        'Kami terus berinovasi untuk meningkatkan efisiensi dan kualitas layanan logistik.',
+        'We continuously innovate to improve efficiency and the quality of our logistics services.',
     },
     {
       icon: '⭐',
-      title: 'Kepuasan Pelanggan',
+      title: 'Customer Satisfaction',
       description:
-        'Kepuasan dan kepercayaan pelanggan adalah prioritas utama dalam setiap layanan yang kami berikan.',
+        'Customer satisfaction and trust are our primary priorities in every service we deliver.',
     },
   ];
 
   const milestones = [
     {
       year: '2022',
-      title: 'Pendirian Perusahaan',
+      title: 'Company Establishment',
       description:
-        'Dea Trans Solusindo didirikan dengan visi menjadi penyedia layanan freight forwarding terpercaya.',
+        'Dea Trans Solusindo was founded with a vision to become a trusted freight forwarding service provider.',
     },
     {
       year: '2023',
-      title: 'Ekspansi Regional',
-      description: 'Membuka kantor cabang di berbagai kota besar di Indonesia.',
+      title: 'Regional Expansion',
+      description: 'Opened branch offices in various major cities across Indonesia.',
     },
     {
       year: '2024',
-      title: 'Jangkauan Global',
-      description: 'Melayani impor dari China ke Jakarta ',
+      title: 'Global Reach',
+      description: 'Serving imports from China to Jakarta and expanding internationally.',
     },
     {
       year: '2025',
-      title: 'Transformasi Digital',
+      title: 'Digital Transformation',
       description:
-        'Implementasi sistem tracking dan manajemen logistik berbasis teknologi.',
+        'Implementation of technology-based tracking and logistics management systems.',
     },
     {
       year: '2024',
-      title: 'Sertifikasi Internasional',
+      title: 'International Certification',
       description:
-        'Meraih sertifikasi ISO dan penghargaan sebagai freight forwarder terpercaya.',
+        'Achieved ISO certification and recognition as a trusted freight forwarder.',
     },
   ];
 
@@ -72,9 +96,9 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.heroTitle}>Dea Trans Solusindo</h1>
+          <h1 className={styles.heroTitle}>Our Story</h1>
           <p className={styles.heroSubtitle}>
-            Solusi Impor Terpercaya untuk Bisnis Anda.
+            Bridging Distance, Building Trust
           </p>
         </div>
       </section>
@@ -84,39 +108,59 @@ export default function AboutPage() {
         <div className="container">
           <div className={styles.overview}>
             <div className={styles.overviewContent}>
-              <h2 className="section-title" style={{ textAlign: 'left' }}>
-                VISI
-              </h2>
               <p className={styles.text}>
-                Kami percaya bahwa layanan forwarder yang handal adalah fondasi
-                kesuksesan perdagangan internasional. Tujuan kami adalah
-                membantu bisnis membangun rantai pasokan yang kuat dan efisien.
-                Proses kami dimulai dengan memahami kebutuhan import spesifik
-                klien.
+                Founded in 2022, Dea Trans Solusindo began with a simple vision:
+                to revolutionize freight forwarding by combining reliability,
+                transparency, and cutting-edge technology. What started as a
+                small team of logistics experts has grown into a trusted partner
+                for businesses across Indonesia and internationally.
               </p>
-              <h2 className="section-title" style={{ textAlign: 'left' }}>
-                MISI
-              </h2>
               <p className={styles.text}>
-                Kami kemudian menggunakan informasi tersebut untuk menciptakan
-                solusi import yang disesuaikan, yang tidak hanya mencerminkan
-                standar kualitas tinggi tetapi juga membantu mencapai tujuan
-                bisnis Anda. Dari penanganan dokumen hingga koordinasi
-                pengiriman, kami fokus pada setiap detail.
+                Our journey has been driven by a commitment to understanding our
+                clients&apos; unique needs and delivering solutions that exceed
+                expectations. From managing complex import-export operations to
+                coordinating multi-modal shipments, we&apos;ve built a
+                reputation for excellence through meticulous attention to detail
+                and unwavering dedication to customer success.
               </p>
+              <div className={styles.overviewButton}>
+                <Link href="/contact" className="btn btn-primary">
+                  Get in Touch
+                </Link>
+              </div>
             </div>
             <div className={styles.overviewImage}>
               <div className={styles.imagePlaceholder}>
                 <Image
-                  src="/images/office.jpg"
-                  alt="Kantor Pusat"
+                  src="/images/dea-teams.jpg"
+                  alt="Dea Trans Solusindo Office"
                   width={500}
                   height={500}
                   className={styles.image}
                 />
-                <p>Kantor Pusat Dea Trans Solusindo</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className={styles.whyChooseSection}>
+        <div className="container">
+          <h2 className="section-title">Why Choose Us</h2>
+          <p className="section-subtitle">
+            What sets us apart in the logistics industry
+          </p>
+          <div className={styles.whyChooseGrid}>
+            {whyChooseUs.map((feature, index) => (
+              <div key={index} className={styles.whyChooseCard}>
+                <div className={styles.whyChooseIcon}>{feature.icon}</div>
+                <div className={styles.whyChooseContent}>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -124,9 +168,9 @@ export default function AboutPage() {
       {/* Values Section */}
       <section className={styles.valuesSection}>
         <div className="container">
-          <h2 className="section-title">Nilai-Nilai Kami</h2>
+          <h2 className="section-title">Our Values</h2>
           <p className="section-subtitle">
-            Prinsip-prinsip yang memandu setiap aspek bisnis kami
+            Principles that guide every aspect of our business
           </p>
           <div className={styles.valuesGrid}>
             {values.map((value, index) => (
@@ -137,6 +181,22 @@ export default function AboutPage() {
                 description={value.description}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className={styles.ctaSection}>
+        <div className="container">
+          <div className={styles.ctaContent}>
+            <h2>Ready to Transform Your Logistics?</h2>
+            <p>
+              Let&apos;s work together to streamline your supply chain and
+              unlock new growth opportunities for your business.
+            </p>
+            <Link href="/contact" className="btn btn-secondary">
+              Contact Us Today
+            </Link>
           </div>
         </div>
       </section>

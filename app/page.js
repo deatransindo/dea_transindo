@@ -15,66 +15,68 @@ export default function Home() {
 
   const services = [
     {
-      icon: '🚢',
+      image: '/images/sea-freight.jpg',
       title: 'Sea Freight',
       description:
-        'Layanan pengiriman laut yang ekonomis dan andal untuk kargo bervolume besar ke seluruh dunia.',
+        'Cost-effective maritime shipping solutions for large volume cargo worldwide. We handle international sea freight with complete customs documentation.',
     },
     {
-      icon: '✈️',
+      image: '/images/air-freight.jpg',
       title: 'Air Freight',
       description:
-        'Solusi pengiriman udara cepat untuk barang-barang yang membutuhkan pengiriman ekspres.',
+        'Fast and reliable air cargo services for time-sensitive shipments. Ideal for urgent deliveries and perishable goods requiring quick transport.',
     },
     {
-      icon: '🚚',
+      image: '/images/land-freight.jpg',
       title: 'Land Freight',
       description:
-        'Pengiriman darat yang efisien untuk distribusi domestik dan regional.',
+        'Efficient ground transportation for domestic and regional distribution. Network coverage across major cities with real-time tracking capabilities.',
     },
     {
-      icon: '📦',
+      image: '/images/warehouse.jpg',
       title: 'Warehousing',
       description:
-        'Fasilitas gudang modern dengan sistem manajemen inventori yang terintegrasi.',
+        'Modern warehouse facilities with integrated inventory management systems. Climate-controlled storage and secure handling of valuable cargo.',
     },
     {
-      icon: '📋',
+      image: '/images/customs.jpg',
       title: 'Customs Clearance',
       description:
-        'Pengurusan bea cukai yang cepat dan profesional untuk kelancaran pengiriman Anda.',
+        'Professional customs brokerage and documentation services. Expert handling of import/export regulations and compliance requirements.',
     },
     {
-      icon: '📊',
+      image: '/images/supply-chain.jpg',
       title: 'Supply Chain',
       description:
-        'Manajemen rantai pasok end-to-end untuk optimalisasi logistik bisnis Anda.',
+        'End-to-end supply chain management and optimization. Comprehensive logistics solutions for streamlined business operations.',
     },
   ];
 
   const features = [
     {
-      icon: '🌍',
-      title: 'Transparansi',
-      description: 'Hitung perkiraan biaya impor anda, dan konsultasi gratis',
+      image:
+        'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&h=300&fit=crop',
+      title: 'Transparent Pricing',
+      description:
+        'Calculate accurate import costs and enjoy free consultation services. No hidden charges or unexpected fees.',
     },
     {
-      icon: '⚡',
-      title: 'Pengiriman Cepat',
+      image: '/images/delivery.png',
+      title: 'Fast Delivery',
       description:
-        'Proses yang efisien dan rute optimal untuk pengiriman tepat waktu.',
+        'Efficient processes and optimized routes ensure on-time delivery. Real-time tracking keeps you informed every step of the way.',
     },
     {
-      icon: '💰',
-      title: 'Harga Kompetitif',
+      image: '/images/price.png',
+      title: 'Competitive Rates',
       description:
-        'Tarif yang kompetitif tanpa mengurangi kualitas layanan kami.',
+        'Best market prices without compromising service quality. Flexible pricing options tailored to your business needs.',
     },
     {
-      icon: '🔒',
-      title: 'Aman & Terpercaya',
+      image: '/images/reliable.png',
+      title: 'Secure & Reliable',
       description:
-        'Asuransi penuh dan tracking real-time untuk keamanan barang Anda.',
+        'Full cargo insurance and real-time tracking for complete peace of mind. Dedicated support team available 24/7.',
     },
   ];
 
@@ -127,7 +129,7 @@ export default function Home() {
     } catch (error) {
       console.error('Tracking error:', error);
       setTrackingError(
-        'Terjadi kesalahan saat melacak pengiriman. Silakan coba lagi.'
+        'An error occurred while tracking your shipment. Please try again.'
       );
     } finally {
       setIsTracking(false);
@@ -172,10 +174,15 @@ export default function Home() {
         <div className="container">
           <div className={styles.trackingContainer}>
             <div className={styles.trackingHeader}>
-              <span className={styles.trackingIcon}>📦</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/icons/tracking.svg"
+                alt="Tracking Icon"
+                className={styles.trackingIcon}
+              />
               <div>
-                <h2>Lacak Kiriman Anda</h2>
-                <p>Masukkan nomor resi untuk melacak posisi barang Anda.</p>
+                <h2>TRACK YOUR CARGO</h2>
+                <p>Enter your tracking number to monitor your shipment location.</p>
               </div>
             </div>
 
@@ -183,7 +190,7 @@ export default function Home() {
               <div className={styles.trackingInputGroup}>
                 <input
                   type="text"
-                  placeholder="Masukkan nomor resi..."
+                  placeholder="Enter your tracking number..."
                   value={trackingNumber}
                   onChange={(e) => setTrackingNumber(e.target.value)}
                   className={styles.trackingInput}
@@ -194,7 +201,7 @@ export default function Home() {
                   className={styles.trackingButton}
                   disabled={isTracking}
                 >
-                  {isTracking ? '🔍 Melacak...' : '🔍 Lacak Sekarang'}
+                  {isTracking ? '🔍 Tracking...' : '🔍 Track Now'}
                 </button>
               </div>
             </form>
@@ -210,9 +217,9 @@ export default function Home() {
               <div className={styles.trackingResult}>
                 <div className={styles.resultHeader}>
                   <div className={styles.resultHeaderLeft}>
-                    <h3>Informasi Pengiriman</h3>
+                    <h3>Shipment Information</h3>
                     <span className={styles.resiNumber}>
-                      Resi: {trackingResult.trackingNumber}
+                      Tracking Number: {trackingResult.trackingNumber}
                     </span>
                   </div>
                   <span
@@ -225,7 +232,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                {/* Status Keberangkatan */}
+                {/* Departure Status */}
                 {trackingResult.departureStatus && (
                   <div
                     className={
@@ -241,16 +248,16 @@ export default function Home() {
                     </span>
                     <div>
                       <strong>
-                        Status Keberangkatan:{' '}
+                        Departure Status:{' '}
                         {trackingResult.departureStatusText}
                       </strong>
                       {trackingResult.departureStatus === 'on_time' ? (
-                        <p>Keberangkatan sesuai jadwal</p>
+                        <p>Departure on schedule</p>
                       ) : (
                         <>
                           {trackingResult.delayReason && (
                             <p className={styles.delayReason}>
-                              Alasan: {trackingResult.delayReason}
+                              Reason: {trackingResult.delayReason}
                             </p>
                           )}
                         </>
@@ -259,27 +266,27 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* Detail Pengiriman */}
+                {/* Shipment Details */}
                 <div className={styles.resultDetails}>
                   <div className={styles.detailGrid}>
                     <div className={styles.detailItem}>
                       <span className={styles.detailIcon}>🚀</span>
                       <div>
-                        <label>Layanan</label>
+                        <label>Service</label>
                         <p>{trackingResult.service}</p>
                       </div>
                     </div>
                     <div className={styles.detailItem}>
                       <span className={styles.detailIcon}>📍</span>
                       <div>
-                        <label>Lokasi Saat Ini</label>
+                        <label>Current Location</label>
                         <p>{trackingResult.currentLocation}</p>
                       </div>
                     </div>
                     <div className={styles.detailItem}>
                       <span className={styles.detailIcon}>📅</span>
                       <div>
-                        <label>Estimasi Tiba</label>
+                        <label>Estimated Arrival</label>
                         <p>{trackingResult.estimatedArrival}</p>
                       </div>
                     </div>
@@ -294,16 +301,16 @@ export default function Home() {
       {/* Services Section */}
       <section className={styles.section}>
         <div className="container">
-          <h2 className="section-title">Layanan Kami</h2>
+          <h2 className="section-title">Our Services</h2>
           <p className="section-subtitle">
-            Kami menyediakan berbagai layanan freight forwarding yang
-            disesuaikan dengan kebutuhan bisnis Anda
+            We provide comprehensive freight forwarding services tailored
+            to meet your business needs
           </p>
           <div className={styles.servicesGrid}>
             {services.map((service, index) => (
               <ServiceCard
                 key={index}
-                icon={service.icon}
+                image={service.image}
                 title={service.title}
                 description={service.description}
               />
@@ -311,7 +318,7 @@ export default function Home() {
           </div>
           <div className={styles.ctaButton}>
             <Link href="/services" className="btn btn-primary">
-              Lihat Semua Layanan
+              View All Services
             </Link>
           </div>
         </div>
@@ -320,15 +327,15 @@ export default function Home() {
       {/* Why Choose Us Section */}
       <section className={styles.whySection}>
         <div className="container">
-          <h2 className="section-title">Mengapa Memilih Kami</h2>
+          <h2 className="section-title">Why Choose Us</h2>
           <p className="section-subtitle">
-            Kepercayaan dan kepuasan klien adalah prioritas utama kami
+            Client trust and satisfaction are our top priorities
           </p>
           <div className={styles.featuresGrid}>
             {features.map((feature, index) => (
               <Feature
                 key={index}
-                icon={feature.icon}
+                image={feature.image}
                 title={feature.title}
                 description={feature.description}
               />
@@ -341,13 +348,13 @@ export default function Home() {
       <section className={styles.ctaSection}>
         <div className="container">
           <div className={styles.ctaContent}>
-            <h2>Siap Untuk Memulai?</h2>
+            <h2>Ready to Get Started?</h2>
             <p>
-              Hubungi kami hari ini untuk konsultasi gratis dan dapatkan solusi
-              logistik terbaik untuk bisnis Anda.
+              Contact us today for a free consultation and discover the best
+              logistics solution for your business.
             </p>
             <Link href="/contact" className="btn btn-secondary">
-              Hubungi Kami Sekarang
+              Contact Us Now
             </Link>
           </div>
         </div>

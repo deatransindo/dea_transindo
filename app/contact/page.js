@@ -43,7 +43,7 @@ export default function ContactPage() {
         setStatus({
           type: 'success',
           message:
-            'Terima kasih! Pesan Anda telah berhasil dikirim. Tim kami akan segera menghubungi Anda.',
+            'Thank you! Your message has been sent successfully. Our team will contact you soon.',
         });
         setFormData({
           name: '',
@@ -56,13 +56,13 @@ export default function ContactPage() {
       } else {
         setStatus({
           type: 'error',
-          message: data.message || 'Terjadi kesalahan. Silakan coba lagi.',
+          message: data.message || 'An error occurred. Please try again.',
         });
       }
     } catch (error) {
       setStatus({
         type: 'error',
-        message: 'Terjadi kesalahan. Silakan coba lagi nanti.',
+        message: 'An error occurred. Please try again later.',
       });
     } finally {
       setIsSubmitting(false);
@@ -74,9 +74,9 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.heroTitle}>Hubungi Kami</h1>
+          <h1 className={styles.heroTitle}>Contact Us</h1>
           <p className={styles.heroSubtitle}>
-            Kami siap membantu kebutuhan logistik Anda
+            We are ready to help with your logistics needs
           </p>
         </div>
       </section>
@@ -87,17 +87,17 @@ export default function ContactPage() {
           <div className={styles.contactWrapper}>
             {/* Contact Info */}
             <div className={styles.contactInfo}>
-              <h2>Informasi Kontak</h2>
+              <h2>Contact Information</h2>
               <p className={styles.infoDescription}>
-                Jangan ragu untuk menghubungi kami. Tim kami siap membantu Anda
-                dengan layanan terbaik.
+                Feel free to reach out to us. Our team is ready to assist you
+                with the best services.
               </p>
 
               <div className={styles.infoList}>
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}>📍</div>
                   <div>
-                    <h4>Alamat Kantor</h4>
+                    <h4>Office Address</h4>
                     <p>
                       Ruko Modern Business Park No. 12, Cipondoh, Tangerang,
                       Banten
@@ -108,7 +108,7 @@ export default function ContactPage() {
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}>📞</div>
                   <div>
-                    <h4>Telepon</h4>
+                    <h4>Phone</h4>
                     <p>
                       +62 818-828-388
                       <br />
@@ -128,11 +128,11 @@ export default function ContactPage() {
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}>🕐</div>
                   <div>
-                    <h4>Jam Operasional</h4>
+                    <h4>Business Hours</h4>
                     <p>
-                      Senin - Jumat: 09:00 - 17:00
+                      Monday - Friday: 09:00 - 17:00
                       <br />
-                      Sabtu - Minggu: Tutup
+                      Saturday - Sunday: Closed
                     </p>
                   </div>
                 </div>
@@ -141,9 +141,9 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div className={styles.contactForm}>
-              <h2>Kirim Pesan</h2>
+              <h2>Send Message</h2>
               <p className={styles.formDescription}>
-                Isi formulir di bawah ini dan kami akan segera menghubungi Anda
+                Fill out the form below and we will get back to you shortly
               </p>
 
               {status.message && (
@@ -154,7 +154,7 @@ export default function ContactPage() {
 
               <form onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="name">Nama Lengkap *</label>
+                  <label htmlFor="name">Full Name *</label>
                   <input
                     type="text"
                     id="name"
@@ -162,7 +162,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    placeholder="Masukkan nama lengkap Anda"
+                    placeholder="Enter your full name"
                   />
                 </div>
 
@@ -176,12 +176,12 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      placeholder="nama@email.com"
+                      placeholder="name@email.com"
                     />
                   </div>
 
                   <div className={styles.formGroup}>
-                    <label htmlFor="phone">Nomor Telepon *</label>
+                    <label htmlFor="phone">Phone Number *</label>
                     <input
                       type="tel"
                       id="phone"
@@ -196,38 +196,38 @@ export default function ContactPage() {
 
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
-                    <label htmlFor="company">Nama Perusahaan</label>
+                    <label htmlFor="company">Company Name</label>
                     <input
                       type="text"
                       id="company"
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      placeholder="Nama perusahaan (opsional)"
+                      placeholder="Company name (optional)"
                     />
                   </div>
 
                   <div className={styles.formGroup}>
-                    <label htmlFor="service">Layanan yang Diminati</label>
+                    <label htmlFor="service">Interested Service</label>
                     <select
                       id="service"
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
                     >
-                      <option value="">Pilih Layanan</option>
+                      <option value="">Select Service</option>
                       <option value="sea-freight">Sea Freight</option>
                       <option value="air-freight">Air Freight</option>
                       <option value="land-freight">Land Freight</option>
                       <option value="warehousing">Warehousing</option>
                       <option value="customs">Customs Clearance</option>
-                      <option value="other">Lainnya</option>
+                      <option value="other">Other</option>
                     </select>
                   </div>
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="message">Pesan *</label>
+                  <label htmlFor="message">Message *</label>
                   <textarea
                     id="message"
                     name="message"
@@ -235,7 +235,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     rows="6"
-                    placeholder="Ceritakan kebutuhan Anda..."
+                    placeholder="Tell us about your needs..."
                   ></textarea>
                 </div>
 
@@ -244,7 +244,7 @@ export default function ContactPage() {
                   className={`btn btn-primary ${styles.submitBtn}`}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>

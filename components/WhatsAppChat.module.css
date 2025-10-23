@@ -7,14 +7,15 @@
   bottom: 100px;
   width: 380px;
   max-height: 600px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  background: var(--bg-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
   display: flex;
   flex-direction: column;
   z-index: 1000;
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 @keyframes slideUp {
@@ -215,24 +216,43 @@
 }
 
 .quickReplyButton {
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-white);
+  border: 2px solid #e5e7eb;
   padding: 10px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   font-size: 0.85rem;
   color: #374151;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.quickReplyButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.quickReplyButton:hover::before {
+  opacity: 1;
 }
 
 .quickReplyButton:hover {
-  background: #25d366;
   color: white;
   border-color: #25d366;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+}
+
+.quickReplyButton span {
+  position: relative;
+  z-index: 1;
 }
 
 /* Footer */

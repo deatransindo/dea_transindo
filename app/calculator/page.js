@@ -102,115 +102,180 @@ export default function CalculatorPage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.heroTitle}>Kalkulator Biaya Impor</h1>
+          <h1 className={styles.heroTitle}>Import Cost Calculator</h1>
           <p className={styles.heroSubtitle}>
-            Hitung estimasi biaya impor dari China ke Jakarta
+            Calculate estimated import costs from China to Jakarta
           </p>
         </div>
       </section>
-
+      <div className="container">
+        <h1 className={styles.heroTitle}>Choose your freight</h1>
+        <p className={styles.heroSubtitle}>
+          Input the Item Dimensions or Weight
+        </p>
+      </div>
       {/* Calculator Section */}
       <section className="section">
         <div className="container">
           <div className={styles.calculatorWrapper}>
-            {/* Form Input */}
+            {/* Shipping Method Toggle - Above Form */}
+            <div className={styles.shippingToggle}>
+              <button
+                type="button"
+                className={`${styles.toggleTab} ${
+                  formData.shippingMethod === 'sea' ? styles.active : ''
+                }`}
+                onClick={() =>
+                  setFormData({ ...formData, shippingMethod: 'sea' })
+                }
+              >
+                Sea Freight
+              </button>
+              <button
+                type="button"
+                className={`${styles.toggleTab} ${
+                  formData.shippingMethod === 'air' ? styles.active : ''
+                }`}
+                onClick={() =>
+                  setFormData({ ...formData, shippingMethod: 'air' })
+                }
+              >
+                Air Freight
+              </button>
+            </div>
+
+            {/* Form Input - Single Container */}
             <div className={styles.calculatorForm}>
-              <div className={styles.formHeader}>
-                <h2>📦 Input Data Barang</h2>
-                <p>Masukkan detail barang yang akan diimpor</p>
-              </div>
-
               <form onSubmit={calculateCost}>
-                <div className={styles.formGroup}>
-                  <label htmlFor="weight">Berat per Item (kg) *</label>
-                  <input
-                    type="number"
-                    id="weight"
-                    name="weight"
-                    value={formData.weight}
-                    onChange={handleChange}
-                    step="0.1"
-                    min="0.1"
-                    required
-                    placeholder="Masukan berat.."
-                  />
-                  <small>Masukkan berat aktual barang dalam kilogram</small>
-                </div>
+                {/* Form Content - Conditional & Horizontal Layout */}
+                <div className={styles.formContent}>
+                  {/* Sea Freight - Dimensions & Quantity */}
+                  {formData.shippingMethod === 'sea' && (
+                    <>
+                      <div className={styles.formGroup}>
+                        <label htmlFor="length">
+                          Length <span className={styles.required}>*</span>
+                        </label>
+                        <div className={styles.inputWrapper}>
+                          <input
+                            type="number"
+                            id="length"
+                            name="length"
+                            value={formData.length}
+                            onChange={handleChange}
+                            step="0.1"
+                            min="0.1"
+                            required
+                            placeholder="0"
+                          />
+                          <span className={styles.inputUnit}>cm</span>
+                        </div>
+                      </div>
 
-                <div className={styles.dimensionGroup}>
-                  <label>Dimensi per Item (cm) *</label>
-                  <div className={styles.dimensionInputs}>
-                    <div className={styles.dimensionItem}>
-                      <input
-                        type="number"
-                        name="length"
-                        value={formData.length}
-                        onChange={handleChange}
-                        step="0.1"
-                        min="0.1"
-                        required
-                        placeholder="Panjang"
-                      />
-                      <span>cm</span>
-                    </div>
-                    <span className={styles.times}>×</span>
-                    <div className={styles.dimensionItem}>
-                      <input
-                        type="number"
-                        name="width"
-                        value={formData.width}
-                        onChange={handleChange}
-                        step="0.1"
-                        min="0.1"
-                        required
-                        placeholder="Lebar"
-                      />
-                      <span>cm</span>
-                    </div>
-                    <span className={styles.times}>×</span>
-                    <div className={styles.dimensionItem}>
-                      <input
-                        type="number"
-                        name="height"
-                        value={formData.height}
-                        onChange={handleChange}
-                        step="0.1"
-                        min="0.1"
-                        required
-                        placeholder="Tinggi"
-                      />
-                      <span>cm</span>
-                    </div>
-                  </div>
-                </div>
+                      <div className={styles.formGroup}>
+                        <label htmlFor="width">
+                          Width <span className={styles.required}>*</span>
+                        </label>
+                        <div className={styles.inputWrapper}>
+                          <input
+                            type="number"
+                            id="width"
+                            name="width"
+                            value={formData.width}
+                            onChange={handleChange}
+                            step="0.1"
+                            min="0.1"
+                            required
+                            placeholder="0"
+                          />
+                          <span className={styles.inputUnit}>cm</span>
+                        </div>
+                      </div>
 
-                <div className={styles.formGroup}>
-                  <label htmlFor="quantity">Jumlah Item *</label>
-                  <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    value={formData.quantity}
-                    onChange={handleChange}
-                    min="1"
-                    required
-                    placeholder="Masukan quantity.."
-                  />
-                  <small>Berapa banyak item yang akan dikirim</small>
-                </div>
+                      <div className={styles.formGroup}>
+                        <label htmlFor="height">
+                          Height <span className={styles.required}>*</span>
+                        </label>
+                        <div className={styles.inputWrapper}>
+                          <input
+                            type="number"
+                            id="height"
+                            name="height"
+                            value={formData.height}
+                            onChange={handleChange}
+                            step="0.1"
+                            min="0.1"
+                            required
+                            placeholder="0"
+                          />
+                          <span className={styles.inputUnit}>cm</span>
+                        </div>
+                      </div>
 
-                <div className={styles.formGroup}>
-                  <label htmlFor="shippingMethod">Metode Pengiriman *</label>
-                  <select
-                    id="shippingMethod"
-                    name="shippingMethod"
-                    value={formData.shippingMethod}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="sea">🚢 Sea Freight (Laut)</option>
-                    <option value="air">✈️ Air Freight (Udara)</option>
-                  </select>
+                      <div className={styles.formGroup}>
+                        <label htmlFor="quantity">
+                          Quantity <span className={styles.required}>*</span>
+                        </label>
+                        <div className={styles.inputWrapper}>
+                          <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            value={formData.quantity}
+                            onChange={handleChange}
+                            min="1"
+                            required
+                            placeholder="0"
+                          />
+                          <span className={styles.inputUnit}>pcs</span>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Air Freight - Weight & Quantity */}
+                  {formData.shippingMethod === 'air' && (
+                    <>
+                      <div className={styles.formGroup}>
+                        <label htmlFor="weight">
+                          Weight <span className={styles.required}>*</span>
+                        </label>
+                        <div className={styles.inputWrapper}>
+                          <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            value={formData.weight}
+                            onChange={handleChange}
+                            step="0.1"
+                            min="0.1"
+                            required
+                            placeholder="0"
+                          />
+                          <span className={styles.inputUnit}>kg</span>
+                        </div>
+                      </div>
+
+                      <div className={styles.formGroup}>
+                        <label htmlFor="quantity">
+                          Quantity <span className={styles.required}>*</span>
+                        </label>
+                        <div className={styles.inputWrapper}>
+                          <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            value={formData.quantity}
+                            onChange={handleChange}
+                            min="1"
+                            required
+                            placeholder="0"
+                          />
+                          <span className={styles.inputUnit}>pcs</span>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 <div className={styles.buttonGroup}>
@@ -219,34 +284,25 @@ export default function CalculatorPage() {
                     className={`btn btn-primary ${styles.calculateBtn}`}
                     disabled={isCalculating}
                   >
-                    {isCalculating ? '⏳ Menghitung...' : '🧮 Hitung Biaya'}
+                    {isCalculating ? 'Calculating...' : 'Calculate Cost'}
                   </button>
                   <button
                     type="button"
                     className={`btn ${styles.resetBtn}`}
                     onClick={resetForm}
                   >
-                    🔄 Reset
+                    Reset
                   </button>
                 </div>
               </form>
             </div>
 
             {/* Result Display */}
-            <div className={styles.calculatorResult}>
-              {!result ? (
-                <div className={styles.emptyState}>
-                  <span className={styles.emptyIcon}>📊</span>
-                  <h3>Hasil Perhitungan</h3>
-                  <p>
-                    Isi formulir dan klik tombol &quot;Hitung Biaya&quot; untuk
-                    melihat estimasi biaya impor Anda
-                  </p>
-                </div>
-              ) : (
+            {result && (
+              <div className={styles.calculatorResult}>
                 <div className={styles.resultContent}>
                   <div className={styles.resultHeader}>
-                    <h3>💰 Estimasi Biaya Impor</h3>
+                    <h3>Import Cost Estimate</h3>
                     <span className={styles.methodBadge}>
                       {result.shippingMethod}
                     </span>
@@ -254,20 +310,20 @@ export default function CalculatorPage() {
 
                   <div className={styles.weightInfo}>
                     <div className={styles.weightItem}>
-                      <span className={styles.weightLabel}>Berat Aktual:</span>
+                      <span className={styles.weightLabel}>Actual Weight:</span>
                       <span className={styles.weightValue}>
                         {result.actualWeight} kg
                       </span>
                     </div>
                     <div className={styles.weightItem}>
-                      <span className={styles.weightLabel}>Berat Volume:</span>
+                      <span className={styles.weightLabel}>Volume Weight:</span>
                       <span className={styles.weightValue}>
                         {result.volumeWeight} kg
                       </span>
                     </div>
                     <div className={styles.weightItem}>
                       <span className={styles.weightLabel}>
-                        Berat Dikenakan:
+                        Chargeable Weight:
                       </span>
                       <span className={styles.weightValue}>
                         <strong>{result.chargeableWeight} kg</strong>
@@ -286,13 +342,13 @@ export default function CalculatorPage() {
                   </div>
 
                   <div className={styles.costBreakdown}>
-                    <h4>Rincian Biaya:</h4>
+                    <h4>Cost Breakdown:</h4>
                     <div className={styles.costItem}>
-                      <span>Total perkiraan biaya kirim</span>
+                      <span>Total estimated shipping cost</span>
                       {/* <span>
                         {result.shippingMethod === 'Sea Freight'
-                          ? `Biaya Freight (${result.chargeUnit} CBM × Rp 3.500.000)`
-                          : `Biaya Freight (${result.chargeUnit} kg × Rp 195.000)`}
+                          ? `Freight Cost (${result.chargeUnit} CBM × IDR 3,500,000)`
+                          : `Freight Cost (${result.chargeUnit} kg × IDR 195,000)`}
                       </span> */}
                       <span>{formatCurrency(result.totalCost)}</span>
                     </div>
@@ -307,60 +363,59 @@ export default function CalculatorPage() {
                       }}
                     >
                       <p style={{ margin: '4px 0', fontWeight: '500' }}>
-                        ✅ Sudah termasuk:
+                        Included:
                       </p>
-                      <p style={{ margin: '4px 0' }}>🟢 Custom Clearance</p>
-                      <p style={{ margin: '4px 0' }}>🟢 Bea Masuk</p>
-                      <p style={{ margin: '4px 0' }}>🟢 Pajak (PPN)</p>
+                      <p style={{ margin: '4px 0' }}>Custom Clearance</p>
+                      <p style={{ margin: '4px 0' }}>Import Duty</p>
+                      <p style={{ margin: '4px 0' }}>Tax (VAT)</p>
                     </div>
                   </div>
 
                   <div className={styles.totalCost}>
-                    <span>Total Biaya (All-In):</span>
+                    <span>Total Cost (All-In):</span>
                     <span className={styles.totalAmount}>
                       {formatCurrency(result.totalCost)}
                     </span>
                   </div>
 
                   <div className={styles.transitInfo}>
-                    <span className={styles.transitIcon}>⏱️</span>
                     <div>
-                      <strong>Estimasi Waktu Transit:</strong>
+                      <strong>Estimated Transit Time:</strong>
                       <p>{result.transitDays}</p>
                     </div>
                   </div>
 
                   <div className={styles.disclaimer}>
                     <p>
-                      <strong>⚠️ Catatan Penting:</strong>
+                      <strong>⚠️ Important Note:</strong>
                     </p>
                     <ul>
                       <li>
-                        Harga adalah all-in (sudah termasuk custom clearance,
-                        bea masuk, dan pajak)
+                        Price is all-in (includes custom clearance, import duty,
+                        and tax)
                       </li>
                       <li>
-                        Estimasi ini hanya perhitungan kasar dan dapat berubah
+                        This estimate is a rough calculation and may change
                       </li>
                       <li>
-                        Biaya aktual tergantung pada jenis barang, nilai barang,
-                        dan regulasi terkini
+                        Actual cost depends on product type, product value, and
+                        current regulations
                       </li>
                       <li>
-                        Untuk perhitungan akurat, hubungi tim kami untuk
-                        mendapatkan quotation resmi
+                        For accurate calculations, contact our team to get an
+                        official quotation
                       </li>
                     </ul>
                   </div>
 
                   <div className={styles.ctaButtons}>
                     <a href="/contact" className="btn btn-primary">
-                      💬 Minta Quotation Resmi
+                      Request Official Quotation
                     </a>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -368,35 +423,35 @@ export default function CalculatorPage() {
       {/* Info Section */}
       <section className={styles.infoSection}>
         <div className="container">
-          <h2 className="section-title">Informasi Penting</h2>
+          <h2 className="section-title">Important Information</h2>
           <div className={styles.infoGrid}>
             <div className={styles.infoCard}>
               <span className={styles.infoIcon}>📋</span>
-              <h3>Dokumen yang Diperlukan</h3>
+              <h3>Required Documents</h3>
               <ul>
                 <li>Invoice & Packing List</li>
                 <li>Bill of Lading / AWB</li>
                 <li>Certificate of Origin</li>
-                <li>Dokumen Perizinan (jika diperlukan)</li>
+                <li>Permit Documents (if required)</li>
               </ul>
             </div>
             <div className={styles.infoCard}>
               <span className={styles.infoIcon}>💰</span>
-              <h3>Total Biaya Sudah Termasuk</h3>
+              <h3>Total Cost Includes</h3>
               <ul>
                 <li>Custom Clearance</li>
-                <li>Bea Masuk</li>
-                <li>Pajak (PPN)</li>
-                <li>Asuransi</li>
+                <li>Import Duty</li>
+                <li>Tax (VAT)</li>
+                <li>Insurance</li>
               </ul>
             </div>
             <div className={styles.infoCard}>
               <span className={styles.infoIcon}>💡</span>
-              <h3>Tips Menghemat Biaya</h3>
+              <h3>Cost Saving Tips</h3>
               <ul>
-                <li>Konsolidasi pengiriman untuk volume lebih besar</li>
-                <li>Pilih sea freight untuk barang non-urgent</li>
-                <li>Pastikan packing efisien untuk hemat volume</li>
+                <li>Consolidate shipments for larger volumes</li>
+                <li>Choose sea freight for non-urgent items</li>
+                <li>Ensure efficient packing to save volume</li>
               </ul>
             </div>
           </div>

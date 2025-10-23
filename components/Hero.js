@@ -8,19 +8,18 @@ export default function Hero() {
       <div className={styles.overlay}></div>
       <div className={styles.container}>
         <div className={styles.content}>
-          <h1 className={styles.title}>
-            Solusi Terpercaya untuk Kebutuhan Impor Anda
-          </h1>
+          <h1 className={styles.title}>Bridging Distance, Building Trust</h1>
           <p className={styles.subtitle}>
-            Kami menyediakan layanan laut dan udara yang andal untuk kebutuhan
-            impor Anda
+            Quote, book, and track shipments in minutes. By air and sea, we
+            efficiently move your cargo while you focus on growing your
+            business.
           </p>
           <div className={styles.buttonGroup}>
             <Link href="/services" className="btn btn-primary">
-              Lihat Layanan
+              Our Services
             </Link>
             <Link href="/calculator" className="btn btn-secondary">
-              Hitung Biaya
+              Calculate Cost
             </Link>
           </div>
         </div>
